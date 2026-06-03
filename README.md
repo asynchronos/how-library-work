@@ -10,6 +10,7 @@
 - [ห้องสมุดแตกต่างจาก Wiki อย่างไร](docs/library-vs-wiki.md)
 - [วิธีการทำห้องสมุดดิจิทัล](docs/how-to-build-digital-library.md)
 - [ห้องสมุดที่ใช้ LLM-Wiki แทนหนังสือแต่ละเล่ม](docs/llm-wiki-library.md)
+- [Workflow การศึกษาและนำ LLM-Wiki มาใช้](docs/llm-wiki-adoption-workflow.md)
 - [อภิธานศัพท์ (Glossary)](docs/glossary.md)
 
 ## 📊 รายงานฉบับสมบูรณ์ (Interactive Report)
