@@ -5,6 +5,10 @@
 > "อ่านแนวคิด" แต่เป็นเส้นทางทำงานที่มี **จุดตัดสินใจ (decision gate)**,
 > **ผู้รับผิดชอบ**, และ **สิ่งส่งมอบ (deliverable)** ในแต่ละเฟส
 
+> ⚠️ ปรับวัตถุประสงค์: workflow นี้อิงกรอบ RAG-centric รุ่นก่อน กรอบที่ถูกต้อง
+> (Karpathy-style: ingest→synthesis→lint→query แล้วเก็บเป็นห้องสมุด citation) อยู่ที่
+> [llm-wiki/00-overview.md](llm-wiki/00-overview.md) — เก็บไฟล์นี้ไว้เพื่ออ้างอิงเชิงประวัติ
+
 > หมายเหตุ: เอกสารนี้ต่อยอดจาก [llm-wiki-library.md](llm-wiki-library.md)
 > (แนวคิดและสถาปัตยกรรม) และ [how-to-build-digital-library.md](how-to-build-digital-library.md)
 > ควรอ่านสองชิ้นนั้นก่อนเพื่อเข้าใจศัพท์อย่าง RAG, embedding, citation

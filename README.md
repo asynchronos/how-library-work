@@ -9,9 +9,23 @@
 - [ปัญหาและวิธีแก้ปัญหา](docs/problems-and-solutions.md)
 - [ห้องสมุดแตกต่างจาก Wiki อย่างไร](docs/library-vs-wiki.md)
 - [วิธีการทำห้องสมุดดิจิทัล](docs/how-to-build-digital-library.md)
-- [ห้องสมุดที่ใช้ LLM-Wiki แทนหนังสือแต่ละเล่ม](docs/llm-wiki-library.md)
-- [Workflow การศึกษาและนำ LLM-Wiki มาใช้](docs/llm-wiki-adoption-workflow.md)
 - [อภิธานศัพท์ (Glossary)](docs/glossary.md)
+
+### ชุดงานวิจัย: LLM-Wiki Library (หัวข้อหลัก)
+
+ห้องสมุดของ "หนังสือที่เป็น LLM-Wiki": ผลิตหนังสือแต่ละเล่มด้วยไปป์ไลน์
+`ingest → synthesis → lint → query` (แรงบันดาลใจจาก Karpathy LLM Wiki)
+แล้วนำหลักการห้องสมุดกายภาพมาเก็บหนังสือเหล่านั้นแบบ citation
+
+- [00 · ภาพรวมและโมเดลแนวคิด (Canonical Overview)](docs/llm-wiki/00-overview.md)
+- [01 · ไปป์ไลน์ผลิตหนังสือ (ingest→synthesis→lint→query)](docs/llm-wiki/01-book-pipeline.md)
+- [02 · หนังสือหนึ่งเล่ม (llm-wiki-book)](docs/llm-wiki/02-llm-wiki-book.md)
+- [03 · หลักการห้องสมุดกายภาพที่นำมาใช้](docs/llm-wiki/03-physical-library-principles.md)
+- [04 · การรวมร่างเป็น llm-wiki-library (citation)](docs/llm-wiki/04-llm-wiki-library.md)
+
+> เอกสารรุ่นก่อน (กรอบ RAG-centric ซึ่งปรับแล้ว) เก็บไว้เพื่ออ้างอิง:
+> [ห้องสมุดที่ใช้ LLM-Wiki แทนหนังสือแต่ละเล่ม](docs/llm-wiki-library.md) ·
+> [Workflow การศึกษาและนำ LLM-Wiki มาใช้](docs/llm-wiki-adoption-workflow.md)
 
 ## 📊 รายงานฉบับสมบูรณ์ (Interactive Report)
 
