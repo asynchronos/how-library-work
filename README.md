@@ -9,6 +9,7 @@
 - [ปัญหาและวิธีแก้ปัญหา](docs/problems-and-solutions.md)
 - [ห้องสมุดแตกต่างจาก Wiki อย่างไร](docs/library-vs-wiki.md)
 - [วิธีการทำห้องสมุดดิจิทัล](docs/how-to-build-digital-library.md)
+- [ห้องสมุดที่ใช้ LLM-Wiki แทนหนังสือแต่ละเล่ม](docs/llm-wiki-library.md)
 - [อภิธานศัพท์ (Glossary)](docs/glossary.md)
 
 ## ภาพรวมโดยย่อ
