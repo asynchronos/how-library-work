@@ -8,6 +8,7 @@
 - [งานค้นคว้าหลัก: ห้องสมุดทำงานอย่างไร](docs/how-library-works.md)
 - [ปัญหาและวิธีแก้ปัญหา](docs/problems-and-solutions.md)
 - [ห้องสมุดแตกต่างจาก Wiki อย่างไร](docs/library-vs-wiki.md)
+- [วิธีการทำห้องสมุดดิจิทัล](docs/how-to-build-digital-library.md)
 - [อภิธานศัพท์ (Glossary)](docs/glossary.md)
 
 ## ภาพรวมโดยย่อ
