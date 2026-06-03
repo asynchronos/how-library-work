@@ -12,6 +12,16 @@
 - [ห้องสมุดที่ใช้ LLM-Wiki แทนหนังสือแต่ละเล่ม](docs/llm-wiki-library.md)
 - [อภิธานศัพท์ (Glossary)](docs/glossary.md)
 
+## 📊 รายงานฉบับสมบูรณ์ (Interactive Report)
+
+- [รายงาน LLM-Wiki Library (single-file HTML)](report/index.html) —
+  รายงานเว็บแบบโต้ตอบได้ สำหรับสื่อสารผู้เกี่ยวข้อง 5 ระดับ
+  (ผู้บริหาร, Business/Product, Technical, Compliance/Legal, ผู้ใช้งาน LLM)
+  มี Role Selector, dark mode, diagram, และพิมพ์เป็น PDF ได้
+
+  > เปิดใช้งาน: เปิดไฟล์ `report/index.html` ในเบราว์เซอร์ (ทำงานออฟไลน์ได้)
+  > หรือ host เป็น GitHub Pages เพื่อแชร์ลิงก์ในองค์กร
+
 ## ภาพรวมโดยย่อ
 
 ห้องสมุดคือระบบที่ออกแบบมาเพื่อ **จัดเก็บ จัดระเบียบ ค้นหา และหมุนเวียน**
