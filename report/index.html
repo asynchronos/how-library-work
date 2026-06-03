@@ -105,6 +105,13 @@ main{padding-top:74px}
 .slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s}
 .switch input:checked+.slider{background:var(--accent)}
 .switch input:checked+.slider::before{transform:translateX(18px)}
+.switch input:focus-visible+.slider{outline:2px solid var(--accent);outline-offset:2px}
+.reset-btn{margin-left:auto;font-family:inherit;font-size:13px;font-weight:600;color:var(--accent);
+  background:var(--bg-2);border:1px solid var(--border);border-radius:9px;padding:6px 12px;cursor:pointer;transition:all .2s}
+.reset-btn:hover{border-color:var(--accent);background:var(--grad-soft)}
+/* visible keyboard focus for all interactive controls (a11y) */
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
 
 /* ============ SECTION ============ */
 .sec{padding:46px 0;border-top:1px solid var(--border)}
@@ -190,10 +197,22 @@ tbody tr:hover{background:var(--grad-soft)}
 .acc .body .risk{color:var(--rose);font-weight:600}
 .acc .body .fix{color:var(--green);font-weight:600}
 
-/* reveal anim */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+/* reveal anim — JS adds .js-ready so content is VISIBLE by default (no-JS safe) */
+.js-ready .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
 .reveal.in{opacity:1;transform:none}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* respect motion preferences */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .js-ready .reveal{opacity:1;transform:none}
+}
+/* graceful fallback for browsers without color-mix/backdrop-filter */
+@supports not (color-mix(in srgb,#000 50%,#fff)){
+  nav{background:var(--bg-2)}
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  nav{background:var(--bg-2)}
+}
 
 /* footer */
 footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:var(--muted);font-size:14px}
@@ -223,6 +242,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
 @media print{
   nav,#progress,.role-bar,.cta,footer .foot-grid > :last-child{display:none}
   .sec.dim{display:block!important;opacity:1!important} body{background:#fff}
+  .js-ready .reveal,.reveal{opacity:1!important;transform:none!important}
   .card,.diagram,.tbl-wrap{box-shadow:none;break-inside:avoid}
 }
 </style>
@@ -244,8 +264,8 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
       <a href="#user" data-aud="user business">ประสบการณ์ผู้ใช้</a>
       <a href="#next" data-aud="exec business">ก้าวต่อไป</a>
     </div>
-    <button class="icon-btn menu-toggle" id="menuToggle" aria-label="เมนู">☰</button>
-    <button class="icon-btn" id="themeToggle" aria-label="สลับธีม">🌙</button>
+    <button class="icon-btn menu-toggle" id="menuToggle" aria-label="เปิด/ปิดเมนู" aria-expanded="false" aria-controls="navLinks">☰</button>
+    <button class="icon-btn" id="themeToggle" aria-label="สลับธีมสว่าง/มืด" aria-pressed="false">🌙</button>
   </div>
 </nav>
 
@@ -270,17 +290,18 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
   <div class="role-bar reveal">
     <h3>👤 เลือกบทบาทของคุณ เพื่ออ่านให้ตรงเป้า</h3>
     <p class="sub">รายงานจะไฮไลต์หัวข้อที่เกี่ยวข้องกับคุณ พร้อมสรุป "สิ่งที่คุณควรรู้" เฉพาะกลุ่ม</p>
-    <div class="role-chips" id="roleChips">
-      <button class="chip" data-role="exec"><span class="ico">💼</span>ผู้บริหาร</button>
-      <button class="chip" data-role="business"><span class="ico">📈</span>Business / Product</button>
-      <button class="chip" data-role="tech"><span class="ico">⚙️</span>Technical / Engineering</button>
-      <button class="chip" data-role="legal"><span class="ico">⚖️</span>Compliance / Legal</button>
-      <button class="chip" data-role="user"><span class="ico">💬</span>ผู้ใช้งาน LLM</button>
+    <div class="role-chips" id="roleChips" role="group" aria-label="เลือกบทบาทผู้อ่าน">
+      <button class="chip" data-role="exec" aria-pressed="false"><span class="ico" aria-hidden="true">💼</span>ผู้บริหาร</button>
+      <button class="chip" data-role="business" aria-pressed="false"><span class="ico" aria-hidden="true">📈</span>Business / Product</button>
+      <button class="chip" data-role="tech" aria-pressed="false"><span class="ico" aria-hidden="true">⚙️</span>Technical / Engineering</button>
+      <button class="chip" data-role="legal" aria-pressed="false"><span class="ico" aria-hidden="true">⚖️</span>Compliance / Legal</button>
+      <button class="chip" data-role="user" aria-pressed="false"><span class="ico" aria-hidden="true">💬</span>ผู้ใช้งาน LLM</button>
     </div>
-    <div id="roleCallout"></div>
+    <div id="roleCallout" aria-live="polite" role="status"></div>
     <div class="filter-row" id="filterRow" style="display:none">
       <label class="switch"><input type="checkbox" id="filterToggle"><span class="slider"></span></label>
       <span>แสดงเฉพาะหัวข้อที่เกี่ยวข้องกับบทบาทของฉัน</span>
+      <button class="reset-btn" id="roleReset" type="button">↺ แสดงทั้งหมด</button>
     </div>
   </div>
 </div>
@@ -291,19 +312,23 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
     <div class="sec-head"><span class="sec-num">01</span><h2>บทสรุปผู้บริหาร</h2></div>
     <div class="aud-tags"><span class="aud-tag" data-a="exec">ผู้บริหาร</span><span class="aud-tag" data-a="business">Business</span></div>
     <p class="desc">ภาพรวมระดับตัดสินใจ: ทำไมต้องลงทุน ความเสี่ยงหลัก และข้อเสนอแนะ</p>
-    <div class="grid g4 reveal" style="margin-bottom:22px">
-      <div class="card kpi"><div class="num" data-count="80">0</div><div class="lbl">% ลดเวลาค้นหาคำตอบจากเอกสาร*</div></div>
+    <div class="grid g4 reveal" style="margin-bottom:10px">
+      <div class="card kpi"><div class="num" data-count="80">0</div><div class="lbl">% เป้าหมายลดเวลาค้นหาคำตอบ*</div></div>
       <div class="card kpi"><div class="num" data-count="1">0</div><div class="lbl">LLM-Wiki ต่อ 1 เล่ม (ขอบเขตชัด)</div></div>
       <div class="card kpi"><div class="num" data-count="3">0</div><div class="lbl">เฟส roadmap สู่ production</div></div>
-      <div class="card kpi"><div class="num" data-count="100">0</div><div class="lbl">% คำตอบมี citation ตรวจได้</div></div>
+      <div class="card kpi"><div class="num" data-count="100">0</div><div class="lbl">% คำตอบที่ออกแบบให้แนบ citation*</div></div>
     </div>
+    <p style="font-size:12.5px;color:var(--muted);margin:0 0 22px">
+      <strong>*หมายเหตุ:</strong> ตัวเลข 80% และ 100% เป็น <strong>เป้าหมาย/หลักการออกแบบเชิงภาพประกอบ</strong>
+      ไม่ใช่ผลวัดจริง — ความแม่นยำของ citation ขึ้นกับคุณภาพการทำ RAG ("ตรงกับต้นฉบับ <em>ถ้า</em> ทำ RAG+citation ดี")
+      ควรยืนยันด้วย pilot จริงในองค์กร · ส่วน "1" และ "3" เป็นข้อเท็จจริงเชิงโครงสร้าง
+    </p>
     <div class="grid g3 reveal">
       <div class="card"><span class="ci">🎯</span><h4>โอกาส</h4><p>เปลี่ยนคลังความรู้องค์กร (คู่มือ, นโยบาย, งานวิจัย) ให้พนักงานถาม-ตอบได้ทันที ลดเวลาหาข้อมูลและการพึ่งผู้เชี่ยวชาญ</p></div>
-      <div class="card"><span class="ci">⚠️</span><h4>ความเสี่ยงที่ต้องคุม</h4><p>การมั่ว (hallucination), ที่มาของคำตอบ (provenance), ลิขสิทธิ์ และความเป็นส่วนตัว — ทั้งหมดมีวิธีแก้ที่พิสูจน์แล้ว</p></div>
+      <div class="card"><span class="ci">⚠️</span><h4>ความเสี่ยงที่ต้องคุม</h4><p>การมั่ว (hallucination), ที่มาของคำตอบ (provenance), ลิขสิทธิ์ และความเป็นส่วนตัว — ทั้งหมดมีวิธีแก้ที่นำไปปฏิบัติได้</p></div>
       <div class="card"><span class="ci">✅</span><h4>ข้อเสนอแนะ</h4><p>เริ่มจาก pilot บนคอลเลกชันที่ลิขสิทธิ์ชัดเจน ใช้สถาปัตยกรรม RAG + citation บังคับ แล้วขยายเมื่อผ่าน eval</p></div>
     </div>
     <div class="callout key reveal"><strong>Bottom line:</strong> เทคโนโลยีพร้อมและความเสี่ยงจัดการได้ คุณค่าหลักคือ "การเข้าถึงความรู้แบบสนทนา" บนฐานที่ตรวจสอบย้อนกลับได้ — ลงทุนแบบ pilot ก่อน ความเสี่ยงต่ำ ผลตอบแทนชัด</div>
-    <p style="font-size:12px;color:var(--muted);margin-top:12px">*ตัวเลขเชิงภาพประกอบเพื่อการสื่อสาร ควรยืนยันด้วย pilot จริงในองค์กร</p>
   </div>
 </section>
 
@@ -357,7 +382,10 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
     <p class="desc">แทนที่จะให้ LLM "ตอบจากความจำ" (มั่ว/ล้าสมัยได้) เราให้มัน <strong>ดึงข้อความจริงจากเล่มก่อน แล้วค่อยตอบ</strong></p>
 
     <div class="diagram reveal" style="margin-bottom:24px">
-      <svg viewBox="0 0 760 150" width="100%" style="max-width:760px;display:block;margin:0 auto" font-family="var(--font-mono)">
+      <svg viewBox="0 0 760 150" width="100%" style="max-width:760px;display:block;margin:0 auto" font-family="var(--font-mono)"
+           role="img" aria-labelledby="ragTitle ragDesc">
+        <title id="ragTitle">ลำดับการทำงานของ RAG pipeline</title>
+        <desc id="ragDesc">คำถามผู้ใช้ → แปลงเป็น embedding และค้นด้วย vector search → ดึง chunks ที่เกี่ยวข้องจากต้นฉบับ → LLM สังเคราะห์คำตอบจากบริบท → ได้คำตอบพร้อม citation</desc>
         <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8b5cf6"/></marker>
         <linearGradient id="gg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366f1"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs>
         <g font-size="12" fill="var(--text)" text-anchor="middle">
@@ -435,7 +463,7 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
       <div class="card"><span class="ci">💬</span><h4>คุยกับหนังสือได้เหมือนคุยกับ agent</h4><p>ถามเป็นภาษาธรรมชาติ ("บทนี้สรุปว่าอะไร?", "เปรียบเทียบสองเล่มนี้ให้หน่อย") เหมือนสั่งงาน Claude Code แต่ขอบเขตคือเนื้อหาในเล่ม</p></div>
       <div class="card"><span class="ci">🔗</span><h4>ทุกคำตอบมี "อ้างอิง" คลิกได้</h4><p>ต่างจากแชตทั่วไป — คำตอบจะลิงก์กลับไปหน้าจริงในต้นฉบับ ทำให้เชื่อถือและตรวจสอบได้ ไม่ต้องเดาว่า AI เอามาจากไหน</p></div>
       <div class="card"><span class="ci">🧭</span><h4>เหมือนมี "บรรณารักษ์ส่วนตัว"</h4><p>ไม่ต้องรู้คำค้นที่ตรงเป๊ะ ถามตามความเข้าใจของคุณ ระบบจะค้นเชิงความหมายและพาไปยังเนื้อหาที่ใช่</p></div>
-      <div class="card"><span class="ci">🛡️</span><h4>มั่นใจได้ว่าไม่มั่ว</h4><p>ถ้าเล่มนั้นไม่มีคำตอบ ระบบจะบอก "ไม่พบในเล่มนี้" แทนที่จะแต่งขึ้น — ต่างจาก LLM ทั่วไปที่อาจเดา</p></div>
+      <div class="card"><span class="ci">🛡️</span><h4>ลดการมั่วได้จริง</h4><p>เมื่อออกแบบดี ถ้าเล่มนั้นไม่มีคำตอบ ระบบจะบอก "ไม่พบในเล่มนี้" แทนที่จะแต่งขึ้น — ต่างจาก LLM ทั่วไปที่อาจเดา</p></div>
     </div>
     <div class="callout reveal"><strong>เทียบกับ Claude Code / cowork agent:</strong> เครื่องมือเหล่านั้นทำงานบน "โค้ด/งานของคุณ" ส่วน LLM-Wiki ทำงานบน "คลังความรู้ที่ผ่านการคัดกรอง" — แนวคิด RAG + citation เบื้องหลังเหมือนกัน คือ <em>ดึงของจริงมาก่อน แล้วค่อยตอบ</em></div>
   </div>
@@ -504,22 +532,30 @@ footer{border-top:1px solid var(--border);padding:40px 0;margin-top:30px;color:v
       <div style="font-weight:700;color:var(--text);margin-bottom:4px">📚 ห้องสมุด LLM-Wiki · รายงานฉบับสมบูรณ์</div>
       <div>อ้างอิงเนื้อหาจาก <code>docs/llm-wiki-library.md</code> · ส่วนหนึ่งของโปรเจกต์ how-library-work</div>
     </div>
-    <div>สร้างเป็น single-file HTML · ทำงานออฟไลน์ได้ · รองรับ light/dark · พิมพ์เป็น PDF ได้</div>
+    <div>Single-file HTML · เนื้อหา/สคริปต์ฝังในไฟล์ (ฟอนต์โหลดจาก CDN เมื่อออนไลน์ ออฟไลน์ใช้ฟอนต์ระบบ) · รองรับ light/dark · พิมพ์เป็น PDF ได้</div>
   </div>
 </footer>
 
 <script>
+/* content is visible by default; enabling reveal animations only once JS runs */
+document.body.classList.add('js-ready');
+
+/* ===== SAFE STORAGE (guards private-mode / sandboxed file:// throws) ===== */
+const store={get(k){try{return localStorage.getItem(k);}catch(e){return null;}},
+  set(k,v){try{localStorage.setItem(k,v);}catch(e){/* storage unavailable — ignore */}}};
+
 /* ===== THEME ===== */
 const root=document.body, tBtn=document.getElementById('themeToggle');
-const savedT=localStorage.getItem('llmwiki-theme');
-if(savedT){root.setAttribute('data-theme',savedT);tBtn.textContent=savedT==='dark'?'☀️':'🌙';}
-tBtn.onclick=()=>{const d=root.getAttribute('data-theme')==='dark'?'light':'dark';
-  root.setAttribute('data-theme',d);tBtn.textContent=d==='dark'?'☀️':'🌙';localStorage.setItem('llmwiki-theme',d);};
+const savedT=store.get('llmwiki-theme');
+function applyTheme(d){root.setAttribute('data-theme',d);tBtn.textContent=d==='dark'?'☀️':'🌙';
+  tBtn.setAttribute('aria-pressed',d==='dark');}
+if(savedT)applyTheme(savedT);
+tBtn.onclick=()=>{const d=root.getAttribute('data-theme')==='dark'?'light':'dark';applyTheme(d);store.set('llmwiki-theme',d);};
 
 /* ===== MOBILE MENU ===== */
-const navLinks=document.getElementById('navLinks');
-document.getElementById('menuToggle').onclick=()=>navLinks.classList.toggle('open');
-navLinks.querySelectorAll('a').forEach(a=>a.onclick=()=>navLinks.classList.remove('open'));
+const navLinks=document.getElementById('navLinks'), mBtn=document.getElementById('menuToggle');
+mBtn.onclick=()=>{const open=navLinks.classList.toggle('open');mBtn.setAttribute('aria-expanded',open);};
+navLinks.querySelectorAll('a').forEach(a=>a.onclick=()=>{navLinks.classList.remove('open');mBtn.setAttribute('aria-expanded',false);});
 
 /* ===== PROGRESS BAR ===== */
 const prog=document.getElementById('progress');
@@ -540,31 +576,37 @@ const rev=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.tar
   rev.unobserve(e.target);}}),{threshold:.15});
 document.querySelectorAll('.reveal').forEach(el=>rev.observe(el));
 
-/* ===== COUNTERS ===== */
+/* ===== COUNTERS (final value exposed to AT via aria-label; animation is decorative) ===== */
+document.querySelectorAll('[data-count]').forEach(el=>{
+  el.setAttribute('aria-label',el.dataset.count);el.setAttribute('role','text');});
 function runCount(el){if(el._done)return;el._done=1;const t=+el.dataset.count;let n=0;
   const step=Math.max(1,Math.ceil(t/40));const id=setInterval(()=>{n+=step;if(n>=t){n=t;clearInterval(id);}el.textContent=n;},22);}
 
 /* ===== ROLE SELECTOR ===== */
 const ROLE={
-  exec:{t:'💼 สำหรับผู้บริหาร',items:['ดู <b>บทสรุปผู้บริหาร</b> (โอกาส/ความเสี่ยง/ข้อเสนอแนะ) และ <b>ก้าวต่อไป</b>','เน้น: เริ่ม pilot ความเสี่ยงต่ำ ผลตอบแทนชัด ตรวจสอบย้อนได้ 100%']},
+  exec:{t:'💼 สำหรับผู้บริหาร',items:['ดู <b>บทสรุปผู้บริหาร</b> (โอกาส/ความเสี่ยง/ข้อเสนอแนะ) และ <b>ก้าวต่อไป</b>','เน้น: เริ่ม pilot ความเสี่ยงต่ำ ผลตอบแทนชัด ออกแบบให้ทุกคำตอบตรวจสอบย้อนกลับไปต้นฉบับได้']},
   business:{t:'📈 สำหรับ Business / Product',items:['ดู <b>คุณค่า & Use cases</b> และ <b>Roadmap 3 เฟส</b>','เน้น: เปลี่ยนข้อจำกัดหนังสือนิ่งเป็นความสามารถใหม่ และเส้นทางสู่ production']},
   tech:{t:'⚙️ สำหรับ Technical / Engineering',items:['ดู <b>สถาปัตยกรรม RAG</b> และ <b>ขั้นตอนการสร้าง 8 ขั้น</b>','เน้น: ต้นฉบับ immutable เป็น source of truth, Vector DB, RAG prompt, evaluation']},
   legal:{t:'⚖️ สำหรับ Compliance / Legal',items:['ดู <b>ความเสี่ยง & การกำกับดูแล</b>','เน้น: hallucination, provenance, ลิขสิทธิ์, privacy — ทุกข้อมีวิธีแก้ที่ปฏิบัติได้']},
-  user:{t:'💬 สำหรับผู้ใช้งาน LLM',items:['ดู <b>ประสบการณ์ผู้ใช้งาน</b>','เน้น: คุยกับหนังสือได้เหมือน agent แต่ทุกคำตอบมีอ้างอิงคลิกได้ และไม่มั่ว']}
+  user:{t:'💬 สำหรับผู้ใช้งาน LLM',items:['ดู <b>ประสบการณ์ผู้ใช้งาน</b>','เน้น: คุยกับหนังสือได้เหมือน agent แต่ทุกคำตอบมีอ้างอิงคลิกได้ และลดการมั่ว']}
 };
 let currentRole=null;
+const chips=[...document.querySelectorAll('#roleChips .chip')];
 const callout=document.getElementById('roleCallout'), filterRow=document.getElementById('filterRow'),
-      filterToggle=document.getElementById('filterToggle');
-document.querySelectorAll('#roleChips .chip').forEach(c=>c.onclick=()=>{
+      filterToggle=document.getElementById('filterToggle'), resetBtn=document.getElementById('roleReset');
+function clearRole(){currentRole=null;chips.forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed',false);});
+  callout.classList.remove('show');callout.innerHTML='';filterRow.style.display='none';
+  filterToggle.checked=false;highlight();}
+chips.forEach(c=>c.onclick=()=>{
   const r=c.dataset.role;
-  document.querySelectorAll('#roleChips .chip').forEach(x=>x.classList.remove('active'));
-  if(currentRole===r){currentRole=null;callout.classList.remove('show');filterRow.style.display='none';
-    filterToggle.checked=false;applyFilter();return;}
-  currentRole=r;c.classList.add('active');
+  if(currentRole===r){clearRole();return;}
+  currentRole=r;
+  chips.forEach(x=>{const on=x===c;x.classList.toggle('active',on);x.setAttribute('aria-pressed',on);});
   const d=ROLE[r];callout.innerHTML='<div class="ctitle">'+d.t+'</div><ul>'+d.items.map(i=>'<li>'+i+'</li>').join('')+'</ul>';
   callout.classList.add('show');filterRow.style.display='flex';
   highlight();
 });
+if(resetBtn)resetBtn.onclick=clearRole;
 function highlight(){
   /* nav recommended dots */
   links.forEach(l=>{const a=(l.dataset.aud||'').split(' ');l.classList.toggle('rec',currentRole&&a.includes(currentRole));});

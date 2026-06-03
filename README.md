@@ -19,7 +19,8 @@
   (ผู้บริหาร, Business/Product, Technical, Compliance/Legal, ผู้ใช้งาน LLM)
   มี Role Selector, dark mode, diagram, และพิมพ์เป็น PDF ได้
 
-  > เปิดใช้งาน: เปิดไฟล์ `report/index.html` ในเบราว์เซอร์ (ทำงานออฟไลน์ได้)
+  > เปิดใช้งาน: เปิดไฟล์ `report/index.html` ในเบราว์เซอร์ (เนื้อหา/สคริปต์ฝังในไฟล์
+  > ใช้งานได้แม้ออฟไลน์ ส่วนฟอนต์โหลดจาก CDN เมื่อออนไลน์ ถ้าออฟไลน์จะใช้ฟอนต์ระบบ)
   > หรือ host เป็น GitHub Pages เพื่อแชร์ลิงก์ในองค์กร
 
 ### ตัวอย่างหน้าจอ (Screenshots)
