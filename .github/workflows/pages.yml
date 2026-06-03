@@ -1,0 +1,47 @@
+name: Deploy report to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# อนุญาตให้ GITHUB_TOKEN เปิด/deploy Pages ได้
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# ให้ deploy ทีละครั้ง ไม่ทับซ้อน (ไม่ยกเลิกตัวที่กำลังรัน)
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # เปิด Pages อัตโนมัติครั้งแรก (enablement) — ไม่ต้องเข้า Settings เอง
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # อัปโหลดเฉพาะโฟลเดอร์ report/ เป็น site root → URL ราก = รายงาน
+      - name: Upload report as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: report
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
