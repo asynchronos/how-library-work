@@ -22,6 +22,11 @@
 - [02 · หนังสือหนึ่งเล่ม (llm-wiki-book)](docs/llm-wiki/02-llm-wiki-book.md)
 - [03 · หลักการห้องสมุดกายภาพที่นำมาใช้](docs/llm-wiki/03-physical-library-principles.md)
 - [04 · การรวมร่างเป็น llm-wiki-library (citation)](docs/llm-wiki/04-llm-wiki-library.md)
+- [05 · Worked Example — สร้างหนึ่งเล่มแบบ end-to-end](docs/llm-wiki/05-worked-example.md)
+- [06 · เอกสาร Schema ตัวอย่าง (CLAUDE.md)](docs/llm-wiki/06-schema-example.md)
+- [07 · Roadmap การ implement (เฟส 0–5)](docs/llm-wiki/07-implementation-roadmap.md)
+- [08 · ทีมผู้เชี่ยวชาญและธรรมาภิบาล](docs/llm-wiki/08-expert-team-and-governance.md)
+- [09 · Reference Stack และ Ops](docs/llm-wiki/09-reference-stack-and-ops.md)
 
 > เอกสารรุ่นก่อน (กรอบ RAG-centric ซึ่งปรับแล้ว) เก็บไว้เพื่ออ้างอิง:
 > [ห้องสมุดที่ใช้ LLM-Wiki แทนหนังสือแต่ละเล่ม](docs/llm-wiki-library.md) ·
