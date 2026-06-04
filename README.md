@@ -35,28 +35,18 @@
 ## 📊 รายงานฉบับสมบูรณ์ (Interactive Report)
 
 - [รายงาน LLM-Wiki Library (single-file HTML)](report/index.html) —
-  รายงานเว็บแบบโต้ตอบได้ สำหรับสื่อสารผู้เกี่ยวข้อง 5 ระดับ
-  (ผู้บริหาร, Business/Product, Technical, Compliance/Legal, ผู้ใช้งาน LLM)
-  มี Role Selector, dark mode, diagram, และพิมพ์เป็น PDF ได้
+  รายงานเว็บแบบโต้ตอบได้ กลั่นจากชุดเอกสาร `docs/llm-wiki/` (00–09) ตามกรอบที่ปรับแล้ว
+  (compile-the-wiki: `ingest → synthesis → lint → query`, raw = ความจริง, citation = หัวใจ)
+  สำหรับสื่อสารผู้เกี่ยวข้อง 5 บทบาท
+  (ผู้บริหาร, Technical/Engineering, Information Architect/บรรณารักษ์, Compliance/Legal, ผู้ใช้/Knowledge worker)
+  มี Role Selector, dark mode, diagram (theme-aware) และพิมพ์เป็น PDF ได้
 
   > เปิดใช้งาน: เปิดไฟล์ `report/index.html` ในเบราว์เซอร์ (เนื้อหา/สคริปต์ฝังในไฟล์
   > ใช้งานได้แม้ออฟไลน์ ส่วนฟอนต์โหลดจาก CDN เมื่อออนไลน์ ถ้าออฟไลน์จะใช้ฟอนต์ระบบ)
   > หรือ host เป็น GitHub Pages เพื่อแชร์ลิงก์ในองค์กร
 
-### ตัวอย่างหน้าจอ (Screenshots)
-
-| Hero + Role Selector (Light) | Role Selector ทำงาน (เลือก Technical) |
-|:---:|:---:|
-| ![Hero light mode](report/screenshots/01-hero-light.png) | ![Role selector](report/screenshots/02-role-selector.png) |
-
-| สถาปัตยกรรม RAG + Diagram | บทสรุปผู้บริหาร (Dark mode) |
-|:---:|:---:|
-| ![Architecture](report/screenshots/03-architecture.png) | ![Summary dark mode](report/screenshots/04-summary-dark.png) |
-
-<p align="center">
-  <img src="report/screenshots/05-mobile.png" alt="Mobile responsive view" width="280"><br>
-  <em>มุมมองบนมือถือ (Responsive · Dark mode)</em>
-</p>
+  > หมายเหตุ: ภาพหน้าจอใน `report/screenshots/` เป็นของรายงาน **เวอร์ชันก่อน**
+  > (กรอบ RAG-centric) ยังไม่ได้ถ่ายใหม่สำหรับรายงานปัจจุบัน — เปิดไฟล์ดูเนื้อหาล่าสุดได้โดยตรง
 
 ## ภาพรวมโดยย่อ
 
