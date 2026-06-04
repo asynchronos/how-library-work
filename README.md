@@ -45,8 +45,20 @@
   > ใช้งานได้แม้ออฟไลน์ ส่วนฟอนต์โหลดจาก CDN เมื่อออนไลน์ ถ้าออฟไลน์จะใช้ฟอนต์ระบบ)
   > หรือ host เป็น GitHub Pages เพื่อแชร์ลิงก์ในองค์กร
 
-  > หมายเหตุ: ภาพหน้าจอใน `report/screenshots/` เป็นของรายงาน **เวอร์ชันก่อน**
-  > (กรอบ RAG-centric) ยังไม่ได้ถ่ายใหม่สำหรับรายงานปัจจุบัน — เปิดไฟล์ดูเนื้อหาล่าสุดได้โดยตรง
+### ตัวอย่างหน้าจอ (Screenshots)
+
+| Hero + Role Selector (Light) | Role Selector ทำงาน (เลือก Technical) |
+|:---:|:---:|
+| ![Hero light mode](report/screenshots/01-hero-light.png) | ![Role selector](report/screenshots/02-role-selector.png) |
+
+| โมเดล 3 ชั้น (pipeline ⊂ book ⊂ library) | บทสรุปผู้บริหาร (Dark mode) |
+|:---:|:---:|
+| ![3-layer model diagram](report/screenshots/03-architecture.png) | ![Summary dark mode](report/screenshots/04-summary-dark.png) |
+
+<p align="center">
+  <img src="report/screenshots/05-mobile.png" alt="Mobile responsive view" width="280"><br>
+  <em>มุมมองบนมือถือ (Responsive · Dark mode)</em>
+</p>
 
 ## ภาพรวมโดยย่อ
 
