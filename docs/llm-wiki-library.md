@@ -4,6 +4,10 @@
 > ไม่ใช่ไฟล์นิ่ง ๆ อีกต่อไป แต่กลายเป็น **วิกิที่ขับเคลื่อนด้วย LLM** — คุยได้ ถามได้
 > สรุปได้ และอ้างอิงกลับไปยังต้นฉบับได้
 
+> ⚠️ ปรับวัตถุประสงค์: เอกสารนี้ตั้งกรอบแบบ **RAG-centric** (หนังสือ = ต้นฉบับ + ดึงตอนถาม)
+> ซึ่งถูกปรับใหม่แล้ว ดูกรอบที่ถูกต้อง (Karpathy-style: คอมไพล์ raw เป็น wiki) ได้ที่
+> [llm-wiki/00-overview.md](llm-wiki/00-overview.md) เก็บไฟล์นี้ไว้เพื่ออ้างอิงเชิงประวัติ
+
 > หมายเหตุ: เอกสารนี้ต่อยอดจาก [how-library-works.md](how-library-works.md),
 > [library-vs-wiki.md](library-vs-wiki.md) และ
 > [how-to-build-digital-library.md](how-to-build-digital-library.md)
